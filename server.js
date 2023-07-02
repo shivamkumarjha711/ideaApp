@@ -3,6 +3,7 @@ const serverConfig = require("./config/server.config.js")
 const mongoose = require("mongoose");
 const dbConfig = require("./config/db.config.js")
 const userModel = require("./model/user.model.js")
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -16,7 +17,6 @@ const db = mongoose.connection;
 db.on("error", () => {
     console.log("Error while connecting");
 })
-
 db.once("open", () => {
     console.log("DB is connected");
 
@@ -40,7 +40,7 @@ async function init() {
         userId : "admin",
         email: "satyamkumarjha9696@gmail.com",
         userType: "ADMIN",
-        password: "sat1"
+        password: bcrypt.hashSync("sat1", 5)
     });
     console.log(admin);
 }
